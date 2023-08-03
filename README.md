@@ -30,37 +30,38 @@ I2C-Software-Driver for ARM
 
 ```c
 // 引入头文件
-#include "i2c_driver.h"
+#include "swiic.h"
 
-// 初始化 I2C 总线
-IIC_InitTypeDef iicConfig;
-iicConfig.SCL.Port = GPIOA;
-iicConfig.SCL.Pin = GPIO_PIN_1;
-iicConfig.SDA.Port = GPIOA;
-iicConfig.SDA.Pin = GPIO_PIN_2;
-IIC_Init(&iicConfig);
-```
+// 定义 I2C 总线引脚
+```shell
+//支持I2C复用,只需切换从机地址ADDR
+IIC_InitTypeDef IIC_ONE;
 
-#### 向设备写入数据
+void IIC_ONE_Init(void){
+	IIC_GPIO IIC_SCL = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_01};
+	IIC_GPIO IIC_SDA = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_02};
 
-```c
-uint8_t data[] = {0x12, 0x34, 0x56};
-if (IIC_Write(&iicConfig, data) == 0) {
-    // 写入成功
-} else {
-    // 写入失败
+	IIC_ONE.SCL = IIC_SCL;
+	IIC_ONE.SDA = IIC_SDA;
+	IIC_ONE.addr = 0xAA;//从机地址
+	
+	IIC_Init(&IIC_ONE);
 }
 ```
 
-#### 从设备读取数据
+#### 向设备指定内存地址写入数据
 
 ```c
-uint8_t readData[3];
-if (IIC_Read(&iicConfig, readData) == 0) {
-    // 读取成功，readData 包含读取的数据
-} else {
-    // 读取失败
-}
+uint8_t readData[] = {0x12, 0x34, 0x56};
+uint8_t dataLen = 10;
+IIC_Mem_Read(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, dataLen, readData);
+```
+
+#### 向设备指定内存地址读取数据
+
+```c
+uint8_t data[10];
+IIC_Mem_Write(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, 10, data);
 ```
 
 ### 贡献
