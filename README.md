@@ -28,12 +28,11 @@ I2C-Software-Driver for ARM
 
 #### 初始化 I2C 总线
 
-```c
 // 引入头文件
 #include "swiic.h"
 
 // 定义 I2C 总线引脚
-```shell
+```c
 
 //创建I2C结构体
 IIC_InitTypeDef IIC_ONE;
