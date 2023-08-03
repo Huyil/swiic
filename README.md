@@ -24,7 +24,7 @@ I2C-Software-Driver for ARM
    https://github.com/Huyil/swiic.git
    ```
 
-2. 在您的项目中包含 I2C 软件驱动的源代码文件。
+2. 在您的项目中包含 swiic.c swiic.h文件。
 
 ### 使用示例
 
