@@ -82,4 +82,4 @@ IIC_Mem_Read(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, dataLen, readData);
 
 ## 许可证
 
-这个软件驱动遵循 MIT 许可证。
+遵循 MIT 许可。
