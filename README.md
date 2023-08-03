@@ -34,34 +34,41 @@ I2C-Software-Driver for ARM
 
 // 定义 I2C 总线引脚
 ```shell
-//支持I2C复用,只需切换从机地址ADDR
+
+//创建I2C结构体
 IIC_InitTypeDef IIC_ONE;
 
 void IIC_ONE_Init(void){
-	IIC_GPIO IIC_SCL = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_01};
-	IIC_GPIO IIC_SDA = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_02};
+  //补充SDA SCL 从机地址信息
+  IIC_GPIO IIC_SCL = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_01};
+  IIC_GPIO IIC_SDA = {SYSCTRL_PERICLK_PA,GPIOA,GPIO_PIN_02};
 
-	IIC_ONE.SCL = IIC_SCL;
-	IIC_ONE.SDA = IIC_SDA;
-	IIC_ONE.addr = 0xAA;//从机地址
-	
-	IIC_Init(&IIC_ONE);
+  IIC_ONE.SCL = IIC_SCL;
+  IIC_ONE.SDA = IIC_SDA;
+  IIC_ONE.addr = 0xAA;//从机地址
+  //支持I2C复用,只需切换从机地址ADDR
+
+  //初始化GPIO
+  IIC_Init(&IIC_ONE);
 }
 ```
 
 #### 向设备指定内存地址写入数据
 
 ```c
-uint8_t readData[] = {0x12, 0x34, 0x56};
-uint8_t dataLen = 10;
-IIC_Mem_Read(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, dataLen, readData);
+uint8_t date[] = {0x12, 0x34, 0x56}; //准备需要写入的数据数组
+uint8_t dataLen = 3; //数据长度
+uint16_t MenADDR //需要开始写入的从机内存地址
+IIC_Mem_Write(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, dataLen, date);
 ```
 
-#### 向设备指定内存地址读取数据
+#### 从设备指定内存地址读取数据
 
 ```c
-uint8_t data[10];
-IIC_Mem_Write(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, 10, data);
+uint8_t readData[10];
+uint8_t dataLen = 10;
+uint16_t MenADDR //需要开始读取的从机内存地址
+IIC_Mem_Read(&IIC_ONE, MenADDR, IIC_MEMADD_SIZE_8BIT, dataLen, readData);
 ```
 
 ### 贡献
