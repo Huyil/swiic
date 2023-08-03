@@ -19,7 +19,7 @@ I2C-Software-Driver for ARM
 1. 克隆本仓库到您的本地目录：
 
    ```shell
-   git clone https://github.com/your-username/I2C-Software-Driver.git
+   https://github.com/Huyil/swiic.git
    ```
 
 2. 在您的项目中包含 I2C 软件驱动的源代码文件。
